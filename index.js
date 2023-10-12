@@ -57,6 +57,14 @@ function wagesEarnedOnDate(date){
 
 }
 
+function allWagesFor(){
+    const dateWorked = this.timeInEvents.map( event=> event.date)
+    return dateWorked.reduce((totalIncome, date) => {
+        return totalIncome + wagesEarnedOnDate.call(this,date)
+    }, 
+    0)
+}
+
 
 /*
  We're giving you this function. Take a look at it, you might see some usage
