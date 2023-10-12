@@ -65,36 +65,29 @@ function allWagesFor(){
     0)
 }
 
-function calculatePayroll(employeeRecords) {
-    return employeeRecords.reduce((totalPayroll, employee) =>{
-        return totalPayroll + allWagesFor.call(employee)
+const calculatePayroll = (employeeRecords) => {
+    return employeeRecords.reduce((totalPayroll, employee) => totalPayroll + allWagesFor.call(employee), 0);
+  };
 
-    },
-    0)
-}
-
-function hoursWorkedOnDate(date){
-    const findTimeInEvent = this.timeInEvents.find((event)=>{return event.date === date})
-    const findTimeOutEvent =this.timeOutEvents.find((event)=> {return event.date===date})
-    const timeWorked = (findTimeOutEvent - findTimeInEvent.hour) / 100;
-    return timeWorked
-}
+const hoursWorkedOnDate = (date) => {
+    const findTimeInEvent = this.timeInEvents.find(event => event.date === date);
+    const findTimeOutEvent = this.timeOutEvents.find(event => event.date === date);
+    const timeWorked = (findTimeOutEvent.hour - findTimeInEvent.hour) / 100;
+    return timeWorked;
+  };
 
 
 
-function wagesEarnedOnDate(date){
-    const timeWorked = hoursWorkedOnDate.call(this, date)
+ const wagesEarnedOnDate = (date) => {
+    const timeWorked = hoursWorkedOnDate.call(this, date);
     return timeWorked * this.payPerHour;
+  };
 
-}
+const allWagesFor = () => {
+    const dateWorked = this.timeInEvents.map(event => event.date);
+    return dateWorked.reduce((totalIncome, date) => totalIncome + wagesEarnedOnDate.call(this, date), 0);
+  };
 
-function allWagesFor(){
-    const dateWorked = this.timeInEvents.map( event=> event.date)
-    return dateWorked.reduce((totalIncome, date) => {
-        return totalIncome + wagesEarnedOnDate.call(this,date)
-    },  
-    0)
-}
 function findEmployeeByFirstName(collection, firstNameString){
    // return collection.filter((employee) => {return employee.firstName === firstNameString })[0];
    return collection.find(employee => employee.firstName === firstNameString)
@@ -112,5 +105,5 @@ module.exports = {
 }
 
 
- //rewrote it
+ 
 
