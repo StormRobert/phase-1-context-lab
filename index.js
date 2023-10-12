@@ -61,29 +61,56 @@ function allWagesFor(){
     const dateWorked = this.timeInEvents.map( event=> event.date)
     return dateWorked.reduce((totalIncome, date) => {
         return totalIncome + wagesEarnedOnDate.call(this,date)
-    }, 
+    },  
     0)
 }
 
+function calculatePayroll(employeeRecords) {
+    return employeeRecords.reduce((totalPayroll, employee) =>{
+        return totalPayroll + allWagesFor.call(employee)
 
-/*
- We're giving you this function. Take a look at it, you might see some usage
- that's new and different. That's because we're avoiding a well-known, but
- sneaky bug that we'll cover in the next few lessons!
-
- As a result, the lessons for this function will pass *and* it will be available
- for you to use if you need it!
- */
-
-const allWagesFor = function () {
-    const eligibleDates = this.timeInEvents.map(function (e) {
-        return e.date
-    })
-
-    const payable = eligibleDates.reduce(function (memo, d) {
-        return memo + wagesEarnedOnDate.call(this, d)
-    }.bind(this), 0) // <== Hm, why did we need to add bind() there? We'll discuss soon!
-
-    return payable
+    },
+    0)
 }
+
+function hoursWorkedOnDate(date){
+    const findTimeInEvent = this.timeInEvents.find((event)=>{return event.date === date})
+    const findTimeOutEvent =this.timeOutEvents.find((event)=> {return event.date===date})
+    const timeWorked = (findTimeOutEvent - findTimeInEvent.hour) / 100;
+    return timeWorked
+}
+
+
+
+function wagesEarnedOnDate(date){
+    const timeWorked = hoursWorkedOnDate.call(this, date)
+    return timeWorked * this.payPerHour;
+
+}
+
+function allWagesFor(){
+    const dateWorked = this.timeInEvents.map( event=> event.date)
+    return dateWorked.reduce((totalIncome, date) => {
+        return totalIncome + wagesEarnedOnDate.call(this,date)
+    },  
+    0)
+}
+function findEmployeeByFirstName(collection, firstNameString){
+   // return collection.filter((employee) => {return employee.firstName === firstNameString })[0];
+   return collection.find(employee => employee.firstName === firstNameString)
+}
+
+module.exports = {
+    createEmployeeRecord,
+    createEmployeeRecords,
+    createTimeInEvent,
+    createTimeOutEvent,
+    hoursWorkedOnDate,
+    wagesEarnedOnDate,
+    allWagesFor,
+    calculatePayroll
+}
+
+
+ //rewrote it
 
