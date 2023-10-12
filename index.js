@@ -1,4 +1,5 @@
 /* Your Code Here */
+// initial function
 function hoursWorked(timeIn, timeOut){
     const minutesIn = new Date(timeIn).getMinutes();
     const minutesOut = new Date(timeOut).getMinutes();
@@ -6,7 +7,7 @@ function hoursWorked(timeIn, timeOut){
     const minutesInWork = (minutesIn / 60) + (minutesOut / 60)
     return timeWorked - minutesInWork
 }
-
+//array of the employee record
 function createEmployeeRecord(arr){
     return{
         firstName: arr[0],
@@ -17,12 +18,12 @@ function createEmployeeRecord(arr){
         timeOutEvents: []
     }
 }
-
+// array of the employee record array
 function createEmployeeRecords(array){
     return arrays.map(arr => createEmployeeRecord(arr))
 
 }
-
+//
 function createTimeInEvent(calenderDay){
     const [date, hour] = calenderDay.split('')
     this.timeInEvents.push({
@@ -43,6 +44,20 @@ function createTimeOutEvent(calenderDay){
     })
     return this;
 }
+
+function hoursWorkedOnDate(date){
+    const findTimeInEvent = this.timeInEvents.find((event)=>{return event.date === date})
+    const findTimeOutEvent =this.timeOutEvents.find((event)=> {return event.date===date});
+    return hoursWorked(findTimeInEvent.hour, timeInEvents.hour);
+}
+
+function wagesEarnedOnDate(date){
+    const timeWorked = hoursWorkedOnDate.call(this, date)
+    return timeWorked * this.payPerHour;
+
+}
+
+
 /*
  We're giving you this function. Take a look at it, you might see some usage
  that's new and different. That's because we're avoiding a well-known, but
